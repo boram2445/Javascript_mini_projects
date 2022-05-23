@@ -1,0 +1,106 @@
+@font-face {
+  font-family: 'ROKAFSansBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts2201-3@1.0/ROKAFSansBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html, body{
+  margin:0;
+  width: 100%;
+  height: 100%;
+}
+
+ul{
+  list-style: none;
+  padding:0;
+}
+
+button{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* style */
+body{
+  background-image: url('image/background.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  font-family: 'ROKAFSansBold';
+  text-align: center;
+}
+
+#shopping-list{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 700px;
+  width: 400px;
+  padding: 20px;
+  border: 10px solid #dee0ff;
+  border-radius: 40px;
+  background-color: white;
+  
+}
+
+.lists{
+  padding: 5px;
+  height: 500px;
+  overflow-y: scroll ;
+}
+
+.list{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom:15px;
+  padding: 15px 35px;
+  background-color: rgb(190, 177, 241, 0.3);
+  border-radius: 30px;
+  box-shadow: 0px 4px 15px 0px #51459f14;
+}
+
+.btn-delete{
+  font-size: 16px;
+  transition: all 100ms ease;
+}
+
+.btn-delete:hover{
+  transform:scale(1.1);
+  opacity: 0.8;
+}
+
+.input-item{
+  width: 380px;
+  font-size: 16px;
+  padding: 10px;
+  outline: blueviolet;
+  border: rgba(233, 177, 241, 0.3) 3px solid;
+}
+
+.btn-input{
+  margin-top: 10px;
+  padding:0;
+  font-size: 30px;
+  height: 40px;
+  width: 40px;
+  background-color: rgb(190, 177, 241, 0.3);
+  border-radius: 50%;
+}
+
+/* scroll */
+.lists::-webkit-scrollbar{
+  width:4px;
+}
+.lists::-webkit-scrollbar-thumb{
+  background-color: rgba(236, 205, 245, 0.3) ;
+  border-radius: 10px;
+}
+.lists::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
