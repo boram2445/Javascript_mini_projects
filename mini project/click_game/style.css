@@ -1,6 +1,7 @@
 body{
   margin:0;
   background-color: #222;
+  width: 100vw;
   height: 100vh;
 }
 
@@ -26,8 +27,16 @@ body{
   align-items: center;
 }
 
+.top-btn.start.non{
+  display: none;
+}
+
 .top-btn.stop{
   display: none;
+}
+
+.top-btn.stop.on{
+  display: block;
 }
 
 .top-timer{
@@ -59,18 +68,20 @@ body{
   transform: translateX(-50%);
   width: 400px;
   padding: 15px 0;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
+  text-align: center;
   border-radius: 20px;
   background-color: #222;
   opacity: 0.8;
   display: none;
 }
 
+.modal.on{
+  display: block;
+}
+
 .top-btn,
 .modal-btn{
+  margin: 0 auto;
   width: 50px;
   height: 50px;
   text-align: center;
@@ -91,6 +102,10 @@ body{
 .modal-comment{
   font-size: 35px;
   color:white;
+}
+
+.img{
+  position: absolute;
 }
 
 .img:hover{
