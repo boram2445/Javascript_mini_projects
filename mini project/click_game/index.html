@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click Game</title>
+  <link rel="stylesheet" href="style.css">
+  <source src="main.js" defer>
+  <script src="https://kit.fontawesome.com/234a498536.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="game">
+    <div class="top">
+      <div class="top-btn start">
+        <i class="fa-solid fa-play"></i>
+      </div>
+      <div class="top-btn stop">
+        <i class="fa-solid fa-stop"></i>
+      </div>
+      <div class="top-timer">0:0</div>
+      <div class="top-count">10</div>
+    </div>
+    <div class="modal">
+      <div class="modal-btn">
+        <i class="fa-solid fa-arrow-rotate-right"></i>
+      </div>
+      <div class="modal-comment">You Win🎉</div>
+    </div>
+    <img src="images/bug.png" alt="bug" class="img bug">
+    <img src="images/carrot.png" alt="carrot" class="img carrot">
+  </div>
+  
+</body>
+</html>
+
+<!-- 
+  구현순서
+  1. HTML, CSS 마크업 (o)
+  2. 게임 시작 
+  3. 게임 필드 생성 (랜덤배치)
+  4. 게임 타이머 시작
+  5. 게임 정지
+  6. 게임 마무리 
+  7. 사운드 추가 
+ -->

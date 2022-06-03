@@ -1,0 +1,99 @@
+body{
+  margin:0;
+  background-color: #222;
+  height: 100vh;
+}
+
+#game{
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 500px;
+  background-image: url('images/background.png');
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.top{
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.top-btn.stop{
+  display: none;
+}
+
+.top-timer{
+  margin: 5px auto;
+  border-radius: 10px;
+  border:4px solid black;
+  width: 140px;
+  text-align: center;
+  font-size: 30px;
+  background-color: white;
+}
+
+.top-count{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 50%;
+  border: 3px solid black;
+  font-size: 35px;
+  background-color: palevioletred;
+  color:white;
+}
+
+.modal{
+  position: absolute;
+  bottom:80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  border-radius: 20px;
+  background-color: #222;
+  opacity: 0.8;
+  display: none;
+}
+
+.top-btn,
+.modal-btn{
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 10px;
+  border: 3px solid black;
+  background-color: bisque;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.top-btn:hover,
+.modal-btn:hover{
+  transform: scale(1.1);
+  transition: all 200ms ease;
+}
+
+.modal-comment{
+  font-size: 35px;
+  color:white;
+}
+
+.img:hover{
+  transform: scale(1.1);  
+  cursor: pointer;
+}
