@@ -1,113 +1,172 @@
 "use strict";
-const startBtn = document.querySelector('.top-btn.start');
-const stopBtn = document.querySelector('.top-btn.stop');
+const startBtn = document.querySelector('.top-btn');
 const replayBtn = document.querySelector('.modal-btn');
 const timer = document.querySelector('.top-timer');
 const count = document.querySelector('.top-count');
 const modal = document.querySelector('.modal');
-const bgSizeX = document.querySelector('#game').getBoundingClientRect().width;
-const bgSizeY = document.querySelector('#game').getBoundingClientRect().height;
-const bugList = document.querySelector('.bugs');
-const carrotList = document.querySelector('.carrots');
+const field = document.querySelector('.field');
+const fieldSize = document.querySelector('.field').getBoundingClientRect();
 
-const BUG = 20;
-const CARROT = 15;
-const TIME = 10;
+const BUG_COUNT = 40;
+const CARROT_COUNT = 15;
+const GAME_DURATION_SEC = 10;
+
+let carrotLeft = CARROT_COUNT; 
+let started = false; 
 let intervalId; 
-let bugCount = BUG;
-let carrotCount = CARROT; 
-let countLeft = TIME; 
 
 let audioPlay = new Audio('sound/bg.mp3');
 let audioWin = new Audio('sound/game_win.mp3');
 let audioAlert = new Audio('sound/bug_pull.mp3');
 let audioCarrot = new Audio('sound/carrot_pull.mp3');
 
-startBtn.addEventListener('click', startGame);
-stopBtn.addEventListener('click', stopGame);
-bugList.addEventListener('click', bugClick);
-carrotList.addEventListener('click', carrotClick);
+startBtn.addEventListener('click', ()=>{
+  if(started){
+    stopGame('pause');
+  } else{
+    startGame(); 
+  }
+  started = !started;
+});
+field.addEventListener('click', clickItem);
 replayBtn.addEventListener('click', startGame);
-
-function bugClick(event){
-  if(event.target.tagName === 'IMG'){
-    stopGame('lose');
-  }
-}
-function carrotClick(event){
-  if(event.target.tagName === 'IMG'){
-    event.target.remove();
-    audioCarrot.play();
-    carrotCount--;
-    count.textContent = carrotCount;
-    if(carrotCount === 0){
-      stopGame('win');
-    }
-  }
-}
 
 //1. 게임 시작
 function startGame(){
   audioPlay.play();
-  startBtn.classList.add('non');
-  stopBtn.classList.add('on');
+  initGame(); 
+  showStopButton();
+  showTimerAndScore(); 
+  startGameTimer(); 
   modal.classList.remove('on');
-  count.textContent = carrotCount;
+}
+
+function initGame(){
+  startBtn.style.visibility = 'visible';
+  field.innerHTML = '';
+  count.textContent = CARROT_COUNT;
+  addItem('img carrot', CARROT_COUNT, 'images/carrot.png'); 
+  addItem('img bug', BUG_COUNT, 'images/bug.png'); 
+}
+
+function showTimerAndScore(){
+  count.style.visibility = 'visible';
+  timer.style.visibility = 'visible';
+}
+
+function showStopButton(){
+  startBtn.children[0].classList.remove('fa-play');
+  startBtn.children[0].classList.add('fa-stop');
+}
+
+function startGameTimer(){
+  let remainingTime = GAME_DURATION_SEC; 
+  updateTimerText(remainingTime);
   clearInterval(intervalId); 
-  timer.innerHTML = `0:${countLeft}`;
   intervalId = setInterval(()=>{
-    countLeft--;
-    timer.innerHTML = `0:${countLeft}`;
-    if(countLeft == 0){
+    remainingTime--;
+    if(remainingTime == 0){
+      clearInterval(intervalId);
       stopGame('lose'); 
     }
+    updateTimerText(remainingTime);
   }, 1000);
-  putItem(); 
+}
+
+function updateTimerText(remainingTime){
+  let minute = Math.floor(remainingTime/60);
+  let second = remainingTime%60;
+  timer.innerHTML = `${minute}:${second}`;
 }
 
 //2.아이템 추가 
-function putItem(){
-  for(let i=0; i<bugCount; i++){
-    const bug = document.createElement('img');
-    bug.setAttribute('class', 'img bug');
-    bug.setAttribute('src', 'images/bug.png');
-    bugList.append(bug);
-    itemPosition(bug);
-  }
-
-  for(let i=0; i<carrotCount; i++){
-    const carrot = document.createElement('img');
-    carrot.setAttribute('class', 'img carrot');
-    carrot.setAttribute('src', 'images/carrot.png');
-    carrotList.append(carrot);
-    itemPosition(carrot);
+function addItem(className, count ,path){
+  for(let i=0; i<count; i++){
+    const item = document.createElement('img');
+    item.setAttribute('class', className);
+    item.setAttribute('src', path);
+    field.append(item);
+    itemPosition(item);
   }
 }
 
 //랜덤 배치 함수 
 function itemPosition(item){
-  const itemX = Math.floor(Math.random()*(bgSizeX-100)+30);
-  const itemY = Math.floor(Math.random()*(bgSizeY/2-80)+bgSizeY/2);
+  let x1= 0;
+  let y1 = 0;
+  let x2 = fieldSize.width - 80;
+  let y2 = fieldSize.height - 80;
+  const itemX = randomNumber(x1,x2);
+  const itemY = randomNumber(y1,y2);
   item.style.top = `${itemY}px`; 
   item.style.left = `${itemX}px`;
 }
 
-//3. 게임 정지 
+function randomNumber(min, max){
+  return Math.random()*(max-min)+min;
+}
+
+//3. 아이템 클릭 
+function clickItem(event){
+  if(event.target.tagName !== 'IMG') return; 
+  if(event.target.classList.contains('bug')){
+    stopGame('lose');
+  } else{
+    playSound(audioCarrot);
+    event.target.remove();
+    count.textContent = --carrotLeft;
+    if(carrotLeft === 0){
+      stopGame('win');
+    }
+  }
+}
+
+//4. 게임 정지 
 function stopGame(state){
-  audioPlay.pause();
+  started = false;
+  stopSound(audioPlay);
   clearInterval(intervalId); 
-  startBtn.classList.remove('non');
-  stopBtn.classList.remove('on');
-  bugList.innerHTML = '';
-  carrotList.innerHTML = '';
-  countLeft = TIME;
-  carrotCount = CARROT;
+  hideStopButton();
+  showModal(state);
+  carrotLeft = CARROT_COUNT;
+  field.innerHTML = '';
+}
+
+function hideStopButton(){
+  startBtn.children[0].classList.remove('fa-stop');
+  startBtn.children[0].classList.add('fa-play');
+}
+
+function showModal(state){
   modal.classList.add('on');
   if(state === 'win'){
     modal.children[1].textContent = 'You win🎉';
-    audioWin.play();
+    playSound(audioWin);
   } else{
-    modal.children[1].textContent = 'You lose😈';
-    audioAlert.play();
-  }
+    playSound(audioAlert);
+    startBtn.style.visibility = 'hidden';
+    if(state === 'pause'){
+      modal.children[1].textContent = 'restart❓';
+    } else{
+      modal.children[1].textContent = 'You lose😈';
+    }
+  } 
 }
+
+function playSound(sound){
+  sound.currentTime = 0;
+  sound.play(); 
+}
+
+function stopSound(sound){
+  sound.pause(); 
+}
+
+/*리팩토링 1차
+1. 랜덤배치 - randomNumber 함수 생성 (O)
+2. addItem 함수 파라미터 활용 (O)
+3. startGame 함수 간결하게 하기 (O)
+4. stop btn 지우고, 함수 호출시에 생성하기 (O)
+5. updateTimer 함수 만들기 (O)
+6. playSound 함수 생성 (O)
+*/
