@@ -1,9 +1,9 @@
 "use strict";
 const startBtn = document.querySelector('.top-btn');
-const replayBtn = document.querySelector('.modal-btn');
+// const replayBtn = document.querySelector('.modal-btn');
 const timer = document.querySelector('.top-timer');
 const count = document.querySelector('.top-count');
-const modal = document.querySelector('.modal');
+// const modal = document.querySelector('.modal');
 const field = document.querySelector('.field');
 const fieldSize = document.querySelector('.field').getBoundingClientRect();
 
@@ -137,21 +137,21 @@ function hideStopButton(){
   startBtn.children[0].classList.add('fa-play');
 }
 
-function showModal(state){
-  modal.classList.add('on');
-  if(state === 'win'){
-    modal.children[1].textContent = 'You win🎉';
-    playSound(audioWin);
-  } else{
-    playSound(audioAlert);
-    startBtn.style.visibility = 'hidden';
-    if(state === 'pause'){
-      modal.children[1].textContent = 'restart❓';
-    } else{
-      modal.children[1].textContent = 'You lose😈';
-    }
-  } 
-}
+// function showModal(state){
+//   modal.classList.add('on');
+//   if(state === 'win'){
+//     modal.children[1].textContent = 'You win🎉';
+//     playSound(audioWin);
+//   } else{
+//     playSound(audioAlert);
+//     startBtn.style.visibility = 'hidden';
+//     if(state === 'pause'){
+//       modal.children[1].textContent = 'restart❓';
+//     } else{
+//       modal.children[1].textContent = 'You lose😈';
+//     }
+//   } 
+// }
 
 function playSound(sound){
   sound.currentTime = 0;
@@ -169,4 +169,10 @@ function stopSound(sound){
 4. stop btn 지우고, 함수 호출시에 생성하기 (O)
 5. updateTimer 함수 만들기 (O)
 6. playSound 함수 생성 (O)
+
+리팩토링 2차 - class로 만들기
+-> 함수는 역할에 따라 완벽하게 분리되어야 한다. 
+1. 모달 클래스
+2. 필드 클래스
+3. 게임 클래스 
 */
