@@ -1,30 +1,30 @@
-body{
+body {
   margin: 0;
   background-color: #222;
 }
 
-.target{
+.target {
   position: absolute;
   width: 100px;
   height: 100px;
   transform: translate(-50%, -50%);
 }
 
-.coordinate{
+.coordinate {
   position: absolute;
-  color:white;
+  color: white;
   font-size: 22px;
-  transform: translate(20px,20px);
+  transform: translate(20px, 20px);
 }
 
-.line-y{
+.line-y {
   position: absolute;
   width: 100%;
-  height: 1px; 
+  height: 1px;
   background-color: white;
 }
 
-.line-x{
+.line-x {
   position: absolute;
   width: 1px;
   height: 100%;
