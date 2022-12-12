@@ -1,68 +1,56 @@
-"use strict";
-const lists = document.querySelector('.lists');
-const inputItem = document.querySelector('.input-item');
-const inputBtn = document.querySelector('.btn-input');
-const form = document.querySelector('.new-form');
-const storageItems = JSON.parse(localStorage.getItem("todoItems"));
-let todoArr = [];
+const lists = document.querySelector(".lists");
+const input = document.querySelector(".input-item");
+const form = document.querySelector(".new-form");
 
-//새로 고침시 localStorage 불러오기 
-if(storageItems){
-  storageItems.forEach((item) => {
-    addItem(item); 
-    // todoArr.push(item); 
+function createItem() {
+  const elem = document.createElement("li");
+  elem.setAttribute("class", "list");
+  //3. 요소 체크 - 요소를 생성함과 동시에 이벤트도 부여할 수 있다.
+  elem.addEventListener("click", () => {
+    elem.classList.toggle("done");
+    checkBox.checked = elem.classList.contains("done") ? true : false;
   });
+
+  const div = document.createElement("div");
+  div.setAttribute("class", "wrap-left");
+
+  const randomId = Math.random();
+  const checkBox = document.createElement("input");
+  checkBox.setAttribute("type", "checkbox");
+  checkBox.setAttribute("id", `${input.value}${randomId}`);
+
+  const label = document.createElement("label");
+  label.setAttribute("for", `${input.value}${randomId}`);
+  label.textContent = input.value;
+
+  const trashBtn = document.createElement("button");
+  trashBtn.setAttribute("class", "btn-delete");
+  trashBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+  //2. 요소 삭제
+  trashBtn.addEventListener("click", () => {
+    elem.remove();
+  });
+
+  div.append(checkBox, label);
+  elem.append(div, trashBtn);
+  return elem;
 }
 
-form.addEventListener('submit',(event)=>{
-  event.preventDefault(); 
-  addItem();
-  inputItem.focus();
-});
+//1. 요소 추가
+function onAdd(e) {
+  e.preventDefault();
 
-//1. list item 생성
-function makeItem(data, newTodoItem){
-  const item = document.createElement('li');
-  item.setAttribute('class', 'list');
-  item.dataset.id = newTodoItem.id;
-  item.innerHTML = `
-    <strong>${data}</strong>
-    <button class="btn-delete"><i class="fa-solid fa-trash-can" data-id="${newTodoItem.id}"></i></button>
-  `;
-  return item; 
-}
-
-//2. list item 추가 
-function addItem(localData){
-  // event.preventDefault(); 
-  const data = localData === undefined ? inputItem.value : localData.text;
-  if(data === ''){
+  if (!input.value) {
+    input.focus();
     return;
   }
-  const newTodoItem = saveLocal(data);
-  const item = makeItem(data, newTodoItem);
+  const item = createItem();
   lists.append(item);
-  item.scrollIntoView();
-  inputItem.value = '';
+
+  item.scrollIntoView({ block: "center", behavior: "smooth" });
+
+  input.value = "";
+  input.focus();
 }
 
-//4. 로컬 스토리지 저장
-function saveLocal(data){
-  const newTodoItem = {
-    id:Date.now(),
-    text:data,
-  };
-  todoArr.push(newTodoItem);
-  localStorage.setItem("todoItems", JSON.stringify(todoArr));
-  return newTodoItem; 
-}
-
-//3. list item 삭제 
-lists.addEventListener('click', (event)=>{
-  const id = event.target.dataset.id; 
-  if(!id) return; 
-  const deleteItem = document.querySelector(`.list[data-id="${id}"]`);
-  deleteItem.remove();
-  todoArr = todoArr.filter(item=>item.id !== parseInt(id));
-  localStorage.setItem("todoItems", JSON.stringify(todoArr));
-})
+form.addEventListener("submit", onAdd);
