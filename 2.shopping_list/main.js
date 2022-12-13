@@ -2,38 +2,20 @@ const lists = document.querySelector(".lists");
 const input = document.querySelector(".input-item");
 const form = document.querySelector(".new-form");
 
+let id = 0;
 function createItem() {
-  const elem = document.createElement("li");
-  elem.setAttribute("class", "list");
-  //3. 요소 체크 - 요소를 생성함과 동시에 이벤트도 부여할 수 있다.
-  elem.addEventListener("click", () => {
-    elem.classList.toggle("done");
-    checkBox.checked = elem.classList.contains("done") ? true : false;
-  });
+  const item = document.createElement("li");
+  item.setAttribute("class", "list");
+  item.setAttribute("data-id", id);
 
-  const div = document.createElement("div");
-  div.setAttribute("class", "wrap-left");
+  item.innerHTML = `
+    <label>${input.value}</label>
+  <button class="btn-delete" >
+    <i class="fas fa-trash-alt" aria-hidden="true" data-delete=${id}></i>
+  </button>`;
 
-  const randomId = Math.random();
-  const checkBox = document.createElement("input");
-  checkBox.setAttribute("type", "checkbox");
-  checkBox.setAttribute("id", `${input.value}${randomId}`);
-
-  const label = document.createElement("label");
-  label.setAttribute("for", `${input.value}${randomId}`);
-  label.textContent = input.value;
-
-  const trashBtn = document.createElement("button");
-  trashBtn.setAttribute("class", "btn-delete");
-  trashBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-  //2. 요소 삭제
-  trashBtn.addEventListener("click", () => {
-    elem.remove();
-  });
-
-  div.append(checkBox, label);
-  elem.append(div, trashBtn);
-  return elem;
+  id++;
+  return item;
 }
 
 //1. 요소 추가
@@ -53,4 +35,31 @@ function onAdd(e) {
   input.focus();
 }
 
+//2. 요소 삭제
+function onDelete(e) {
+  const deleteId = e.target.dataset.delete;
+  if (deleteId) {
+    const item = document.querySelector(`.list[data-id="${deleteId}"]`);
+    item.remove();
+  }
+}
+
+//3. 요소 체크
+function onCheck(e) {
+  if (e.target.tagName === "LI") {
+    itemId = e.target.dataset.id;
+  } else if (e.target.tagName === "LABEL") {
+    itemId = e.target.parentElement.parentElement.dataset.id;
+  } else {
+    return;
+  }
+
+  if (itemId) {
+    const item = document.querySelector(`.list[data-id="${itemId}"]`);
+    item.classList.toggle("done");
+  }
+}
+
 form.addEventListener("submit", onAdd);
+lists.addEventListener("click", onDelete);
+lists.addEventListener("click", onCheck);

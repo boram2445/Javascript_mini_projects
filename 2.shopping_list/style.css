@@ -65,13 +65,9 @@ body {
   cursor: pointer;
 }
 
-.list.done label {
+.list.done {
+  background-color: lightblue;
   text-decoration: line-through;
-}
-
-.wrap-left {
-  display: flex;
-  gap: 15px;
 }
 
 .btn-delete {
