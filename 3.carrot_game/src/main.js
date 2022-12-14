@@ -1,3 +1,6 @@
+"use strict";
+import Modal from "./modal.js";
+
 const TIME_SEC = 5;
 const BUG_COUNT = 20;
 const CARROT_COUNT = 10;
@@ -8,21 +11,18 @@ const field_rect = field.getBoundingClientRect();
 const main_btn = document.querySelector(".main-btn");
 const game_timer = document.querySelector(".timer");
 const game_count = document.querySelector(".count");
-const modal = document.querySelector(".modal");
-const modal_btn = document.querySelector(".modal-btn");
 
-const background_audio = new Audio();
-const carrot_audio = new Audio();
-const bug_audio = new Audio();
-const win_audio = new Audio();
-background_audio.src = "./sound/bg.mp3";
-carrot_audio.src = "./sound/carrot_pull.mp3";
-bug_audio.src = "./sound/bug_pull.mp3";
-win_audio.src = "./sound/game_win.mp3";
+const background_audio = new Audio("./sound/bg.mp3");
+const carrot_audio = new Audio("./sound/carrot_pull.mp3");
+const bug_audio = new Audio("./sound/bug_pull.mp3");
+const win_audio = new Audio("./sound/game_win.mp3");
 
 let started = false; //이렇게 전역 변수로 둬서 시작 여부를 판단하면 되는구나@
 let score = 0;
 let timer; //전역변수에 setInterval 함수를 부여하였다.
+
+const gameFinishModal = new Modal();
+gameFinishModal.setOnClick(startGame);
 
 function startGame() {
   started = true;
@@ -35,7 +35,7 @@ function startGame() {
 function stopGame(modalText) {
   started = false;
   main_btn.style.visibility = "hidden";
-  openModal(modalText);
+  gameFinishModal.open(modalText);
   stopTimer();
 
   background_audio.pause();
@@ -53,16 +53,11 @@ function initGame() {
 
 function reset() {
   score = 0;
-  modal.style.display = "none";
+  gameFinishModal.close();
   main_btn.style.visibility = "visible";
   game_count.textContent = CARROT_COUNT;
   field.innerHTML = "";
   background_audio.currentTime = 0;
-}
-
-function openModal(text) {
-  modal.style.display = "block";
-  modal.lastElementChild.textContent = text;
 }
 
 //게임 아이템 추가
@@ -143,5 +138,4 @@ main_btn.addEventListener("click", () => {
   }
 });
 
-modal_btn.addEventListener("click", startGame);
 field.addEventListener("click", clickItem);
