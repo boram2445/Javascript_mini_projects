@@ -1,121 +1,120 @@
-body{
-  margin:0;
-  background-color: #222;
-  width: 100vw;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #000000;
   height: 100vh;
-}
-
-#game{
-  position: absolute;
-  top:50%;
-  left:50%;
-  transform: translate(-50%, -50%);
-  width: 900px;
-  height: 500px;
-  background-image: url('images/background.png');
-  background-size: cover;
-  border-radius: 20px;
-}
-
-.top{
-  height: 50%;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.top-btn.start.non{
-  display: none;
-}
-
-.top-btn.stop{
-  display: none;
-}
-
-.top-btn.stop.on{
-  display: block;
-}
-
-.top-timer{
-  margin: 5px auto;
+#game {
+  position: relative;
+  width: 800px;
+  height: 500px;
   border-radius: 10px;
-  border:4px solid black;
-  width: 140px;
-  text-align: center;
-  font-size: 30px;
-  background-color: white;
-  user-select: none;
-  visibility: hidden;
+  background: url("./images/background.png") center/cover no-repeat;
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  align-items: center;
 }
 
-.top-count{
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+p {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 550;
+}
+
+.header {
+  margin: 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.main-btn,
+.modal-btn {
+  width: 50px;
+  height: 50px;
+  background-color: lemonchiffon;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  font-size: 1.8rem;
+}
+
+.timer {
+  visibility: hidden;
+  width: 200px;
+  background-color: #fff;
+  border: 2px solid #3b3b3b;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.count {
+  visibility: hidden;
   width: 50px;
   height: 50px;
   text-align: center;
-  line-height: 50px;
+  border: 2px solid #000000;
+  background-color: lightcoral;
+  color: #fff;
   border-radius: 50%;
-  border: 3px solid black;
-  font-size: 35px;
-  background-color: palevioletred;
-  color:white;
-  user-select: none;
-  visibility: hidden;
 }
 
-.field{
+.game-field {
   position: relative;
-  height: 50%;
+  width: 100%;
+  height: 100%;
 }
 
-.modal{
+.bug,
+.carrot {
   position: absolute;
-  bottom:80px;
+  transition: transform 100ms ease-in;
+}
+
+.bug {
+  width: 50px;
+  height: 50px;
+}
+
+.bug:hover,
+.carrot:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* 모달 */
+.modal {
+  display: none;
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translateX(-50%);
-  width: 400px;
-  padding: 15px 0;
-  text-align: center;
-  border-radius: 20px;
-  background-color: #222;
-  opacity: 0.8;
-  display: none;
-}
-
-.modal.on{
-  display: block;
-}
-
-.top-btn,
-.modal-btn{
-  margin: 0 auto;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 50px;
+  width: 350px;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  border: 3px solid black;
-  background-color: bisque;
-  font-size: 25px;
-  cursor: pointer;
+  text-align: center;
+  padding: 20px 0 30px;
+  justify-content: center;
+  gap: 10px;
 }
 
-.top-btn:hover,
-.modal-btn:hover{
-  transform: scale(1.1);
-  transition: all 200ms ease;
-}
-
-.modal-comment{
-  font-size: 35px;
-  color:white;
-}
-
-.img{
-  position: absolute;
-}
-
-.img:hover{
-  transform: scale(1.1);  
-  cursor: pointer;
+.modal-text {
+  color: #fff;
 }

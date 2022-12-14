@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Click Game</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="src/main.js" defer></script>
-  <script src="https://kit.fontawesome.com/234a498536.js" crossorigin="anonymous"></script>
-</head>
-<body>
-  <div id="game">
-    <section class="top">
-      <div class="top-btn">
-        <i class="fa-solid fa-play"></i>
-      </div>
-      <div class="top-timer">0:0</div>
-      <div class="top-count">0</div>
-    </section>
-    <section class="field"></section>
-    <section class="modal">
-      <div class="modal-btn">
-        <i class="fa-solid fa-arrow-rotate-right"></i>
-      </div>
-      <div class="modal-comment"></div>
-    </section>
-    
-    
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Click Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/234a498536.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="src/main.js" defer></script>
+  </head>
+  <body>
+    <main id="game">
+      <header class="header">
+        <button class="main-btn">
+          <i class="fas fa-play"></i>
+        </button>
+        <p class="timer">0:00</p>
+        <p class="count"></p>
+      </header>
+      <section class="game-field"></section>
+    </main>
+
+    <!-- 모달 - 모달은 메인 컨텐츠와 따로 만들어 주자 -->
+    <article class="modal">
+      <button class="modal-btn">
+        <i class="fas fa-redo"></i>
+      </button>
+      <p class="modal-text"></p>
+    </article>
+  </body>
 </html>
 
 <!-- 

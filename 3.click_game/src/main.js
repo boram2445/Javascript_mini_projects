@@ -1,178 +1,147 @@
-"use strict";
-const startBtn = document.querySelector('.top-btn');
-// const replayBtn = document.querySelector('.modal-btn');
-const timer = document.querySelector('.top-timer');
-const count = document.querySelector('.top-count');
-// const modal = document.querySelector('.modal');
-const field = document.querySelector('.field');
-const fieldSize = document.querySelector('.field').getBoundingClientRect();
+const TIME_SEC = 5;
+const BUG_COUNT = 20;
+const CARROT_COUNT = 10;
+const CARROT_SIZE = 80;
 
-const BUG_COUNT = 40;
-const CARROT_COUNT = 15;
-const GAME_DURATION_SEC = 10;
+const field = document.querySelector(".game-field");
+const field_rect = field.getBoundingClientRect();
+const main_btn = document.querySelector(".main-btn");
+const game_timer = document.querySelector(".timer");
+const game_count = document.querySelector(".count");
+const modal = document.querySelector(".modal");
+const modal_btn = document.querySelector(".modal-btn");
 
-let carrotLeft = CARROT_COUNT; 
-let started = false; 
-let intervalId; 
+const background_audio = new Audio();
+const carrot_audio = new Audio();
+const bug_audio = new Audio();
+const win_audio = new Audio();
+background_audio.src = "./sound/bg.mp3";
+carrot_audio.src = "./sound/carrot_pull.mp3";
+bug_audio.src = "./sound/bug_pull.mp3";
+win_audio.src = "./sound/game_win.mp3";
 
-let audioPlay = new Audio('sound/bg.mp3');
-let audioWin = new Audio('sound/game_win.mp3');
-let audioAlert = new Audio('sound/bug_pull.mp3');
-let audioCarrot = new Audio('sound/carrot_pull.mp3');
+let started = false; //이렇게 전역 변수로 둬서 시작 여부를 판단하면 되는구나@
+let score = 0;
+let timer; //전역변수에 setInterval 함수를 부여하였다.
 
-startBtn.addEventListener('click', ()=>{
-  if(started){
-    stopGame('pause');
-  } else{
-    startGame(); 
+function startGame() {
+  started = true;
+  reset();
+  initGame();
+
+  background_audio.play();
+}
+
+function stopGame(modalText) {
+  started = false;
+  main_btn.style.visibility = "hidden";
+  openModal(modalText);
+  stopTimer();
+
+  background_audio.pause();
+}
+
+function initGame() {
+  //1. 벌레와 당근 생성
+  addItems("bug", "./images/bug.png", BUG_COUNT);
+  addItems("carrot", "./images/carrot.png", CARROT_COUNT);
+
+  //2. 타이머
+  showTimerAndScore();
+  startTimer();
+}
+
+function reset() {
+  score = 0;
+  modal.style.display = "none";
+  main_btn.style.visibility = "visible";
+  game_count.textContent = CARROT_COUNT;
+  field.innerHTML = "";
+  background_audio.currentTime = 0;
+}
+
+function openModal(text) {
+  modal.style.display = "block";
+  modal.lastElementChild.textContent = text;
+}
+
+//게임 아이템 추가
+function addItems(className, src, count) {
+  for (let i = 0; i < count; i++) {
+    let y = makeRandom(0, field_rect.height - CARROT_SIZE);
+    let x = makeRandom(0, field_rect.width - CARROT_SIZE);
+
+    const item = document.createElement("img");
+    item.setAttribute("class", className);
+    item.setAttribute("src", src);
+    item.style.top = `${y}px`;
+    item.style.left = `${x}px`;
+    field.append(item);
   }
-  started = !started;
-});
-field.addEventListener('click', clickItem);
-replayBtn.addEventListener('click', startGame);
-
-//1. 게임 시작
-function startGame(){
-  audioPlay.play();
-  initGame(); 
-  showStopButton();
-  showTimerAndScore(); 
-  startGameTimer(); 
-  modal.classList.remove('on');
 }
 
-function initGame(){
-  startBtn.style.visibility = 'visible';
-  field.innerHTML = '';
-  count.textContent = CARROT_COUNT;
-  addItem('img carrot', CARROT_COUNT, 'images/carrot.png'); 
-  addItem('img bug', BUG_COUNT, 'images/bug.png'); 
+//타이머와 점수 보여주기
+function showTimerAndScore() {
+  main_btn.innerHTML = '<i class="fas fa-stop"></i>';
+  game_timer.style.visibility = "visible";
+  game_count.style.visibility = "visible";
 }
 
-function showTimerAndScore(){
-  count.style.visibility = 'visible';
-  timer.style.visibility = 'visible';
-}
-
-function showStopButton(){
-  startBtn.children[0].classList.remove('fa-play');
-  startBtn.children[0].classList.add('fa-stop');
-}
-
-function startGameTimer(){
-  let remainingTime = GAME_DURATION_SEC; 
-  updateTimerText(remainingTime);
-  clearInterval(intervalId); 
-  intervalId = setInterval(()=>{
-    remainingTime--;
-    if(remainingTime == 0){
-      clearInterval(intervalId);
-      stopGame('lose'); 
+//타이머
+function startTimer() {
+  let leftTime = TIME_SEC;
+  updateTimerText(leftTime);
+  timer = setInterval(() => {
+    updateTimerText(--leftTime);
+    if (leftTime === 0) {
+      bug_audio.play();
+      stopGame("You loose🐞");
+      return;
     }
-    updateTimerText(remainingTime);
   }, 1000);
 }
 
-function updateTimerText(remainingTime){
-  let minute = Math.floor(remainingTime/60);
-  let second = remainingTime%60;
-  timer.innerHTML = `${minute}:${second}`;
+function stopTimer() {
+  clearInterval(timer);
 }
 
-//2.아이템 추가 
-function addItem(className, count ,path){
-  for(let i=0; i<count; i++){
-    const item = document.createElement('img');
-    item.setAttribute('class', className);
-    item.setAttribute('src', path);
-    field.append(item);
-    itemPosition(item);
-  }
+function updateTimerText(leftTime) {
+  let min = Math.floor(leftTime / 60);
+  let sec = leftTime % 60;
+  game_timer.textContent = `${min}:${sec}`;
 }
 
-//랜덤 배치 함수 
-function itemPosition(item){
-  let x1= 0;
-  let y1 = 0;
-  let x2 = fieldSize.width - 80;
-  let y2 = fieldSize.height - 80;
-  const itemX = randomNumber(x1,x2);
-  const itemY = randomNumber(y1,y2);
-  item.style.top = `${itemY}px`; 
-  item.style.left = `${itemX}px`;
-}
+//아이템 클릭
+function clickItem(e) {
+  if (!started) return; //조건에 맞지 않으면 빠르게 함수를 나가도록 처리하는 것이 좋다.
+  if (e.target.matches(".carrot")) {
+    e.target.remove();
+    score++;
+    game_count.textContent = CARROT_COUNT - score;
+    carrot_audio.play();
 
-function randomNumber(min, max){
-  return Math.random()*(max-min)+min;
-}
-
-//3. 아이템 클릭 
-function clickItem(event){
-  if(event.target.tagName !== 'IMG') return; 
-  if(event.target.classList.contains('bug')){
-    stopGame('lose');
-  } else{
-    playSound(audioCarrot);
-    event.target.remove();
-    count.textContent = --carrotLeft;
-    if(carrotLeft === 0){
-      stopGame('win');
+    if (score === CARROT_COUNT) {
+      win_audio.play();
+      stopGame("✨You Win✨");
     }
+  } else if (e.target.matches(".bug")) {
+    bug_audio.play();
+    stopGame("You loose🐞");
   }
 }
 
-//4. 게임 정지 
-function stopGame(state){
-  started = false;
-  stopSound(audioPlay);
-  clearInterval(intervalId); 
-  hideStopButton();
-  showModal(state);
-  carrotLeft = CARROT_COUNT;
-  field.innerHTML = '';
+//랜덤 최솟값 - 최댓값
+function makeRandom(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function hideStopButton(){
-  startBtn.children[0].classList.remove('fa-stop');
-  startBtn.children[0].classList.add('fa-play');
-}
+main_btn.addEventListener("click", () => {
+  if (!started) {
+    startGame();
+  } else {
+    stopGame("Replay❓");
+  }
+});
 
-// function showModal(state){
-//   modal.classList.add('on');
-//   if(state === 'win'){
-//     modal.children[1].textContent = 'You win🎉';
-//     playSound(audioWin);
-//   } else{
-//     playSound(audioAlert);
-//     startBtn.style.visibility = 'hidden';
-//     if(state === 'pause'){
-//       modal.children[1].textContent = 'restart❓';
-//     } else{
-//       modal.children[1].textContent = 'You lose😈';
-//     }
-//   } 
-// }
-
-function playSound(sound){
-  sound.currentTime = 0;
-  sound.play(); 
-}
-
-function stopSound(sound){
-  sound.pause(); 
-}
-
-/*리팩토링 1차
-1. 랜덤배치 - randomNumber 함수 생성 (O)
-2. addItem 함수 파라미터 활용 (O)
-3. startGame 함수 간결하게 하기 (O)
-4. stop btn 지우고, 함수 호출시에 생성하기 (O)
-5. updateTimer 함수 만들기 (O)
-6. playSound 함수 생성 (O)
-
-리팩토링 2차 - class로 만들기
--> 함수는 역할에 따라 완벽하게 분리되어야 한다. 
-1. 모달 클래스
-2. 필드 클래스
-3. 게임 클래스 
-*/
+modal_btn.addEventListener("click", startGame);
+field.addEventListener("click", clickItem);
