@@ -30,6 +30,7 @@ item.matches('#carrot') //carrot라는 id를 가지고 있는가?
 [참고 블로그](https://curryyou.tistory.com/337)
 
 - 크롬 브라우저에서는 autoplay가 금지되어 자동 재생이 불가하다. 사용자의 클릭 등 어떤 이벤트가 발생하였을때 음원을 재생하도록 해야 한다.
+- Audio에 전달하는 경로 문자열은 HTML이 있는 기준으로 상대경로로 전달해주어야 한다.
 - 사용법
 
   1. `audio 객체`를 생성하고, 음원파일 경로를 설정한다.
@@ -51,6 +52,114 @@ item.matches('#carrot') //carrot라는 id를 가지고 있는가?
   audio.currentTime = 0;
   audio.play();
   ```
+
+### 4) 모듈 사용법
+
+[참고 mdn](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Modules)
+
+1.  **파일 구조**
+
+```
+  index.html
+  main.js
+  modules/
+      canvas.js
+      square.js
+```
+
+2. **모듈 export**
+
+- 모듈 밖으로 내보내려는 항목 앞에 `export`를 붙인다.
+- 함수, let, var, const, class를 내보낼 수 있지만, 최상위 항목이어야 한다. 예를들어 함수 안에서 export를 사용하는 것은 불가능하다.
+
+```
+  export const name = 'square';
+
+  export function draw(ctx, length, x, y, color) {
+    ...
+  }
+```
+
+- 여러 항목을 내보내고 싶은 경우, 모듈 파일 끝에 export를 적고, 내보낼 것들을 중괄호 안에 적어준다.
+
+```
+export { name, draw, reportArea, reportPerimeter };
+```
+
+<br/>
+
+3. **모듈 import**
+
+- 모듈을 사용할 스크립트로 `import` 한다.
+
+```
+import { name, draw, reportArea, reportPerimeter } from './modules/square.js';
+```
+
+<br/>
+
+4. **main.js 모듈을 HTML에 적용하기**
+
+- 스크립트를 모듈로 선언하려면 `type="module"`을 포함 시켜야 한다.
+
+```
+<script type="module" src="main.js"></script>
+```
+
+<br/>
+
+5. **모듈 파일당 하나만 내보낼 경우**
+
+- 내보낼 함수 등 앞에 `export default`를 추가한다.
+- 하나의 모듈은 하나의 `export default`만 허용한다.
+
+```
+//함수명을 export 한다.
+export default randomSquare;
+
+//혹은 익명함수를 export 해주어도 된다.
+export default function(ctx) {
+  ...
+}
+```
+
+- main.js에서 아래처럼 중괄호 없이 import 한다.
+
+```
+import randomSquare from './modules/square.js';
+```
+
+<br/>
+
+6. **모듈명 변경하여 사용하기**
+
+- import 와 export 문의 중괄호 안에 `as` 키워드를 이용하여 새 함수의 이름으로 사용 할 수 있다.
+
+```
+// inside module.js
+export { function1, function2 };
+
+// inside main.js
+import { function1 as newFunctionName,
+         function2 as anotherNewFunctionName } from './modules/module.js';
+```
+
+7. **모듈의 모든 export 한번에 가져오기**
+
+- `*`로 모든 export을 가져올 수 있으며, `as` 뒤의 이름으로 그룹지어지기 때문에 해당 이름으로 export 된 함수들에 접근 할 수 있다.
+
+```
+// inside module.js
+export { name, draw, reportArea, reportPerimeter };
+
+// inside main.js
+import * as Module from './modules/module.js';
+
+//사용
+Module.function1()
+Module.function2()
+etc.
+```
 
 ## <br/>
 
