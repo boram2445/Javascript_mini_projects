@@ -247,3 +247,15 @@ function updateTimerText(leftTime) {
   game_timer.textContent = `${min}:${sec}`;
 }
 ```
+
+### 3) 함수 전달하기
+
+- 핸들러 함수 호출시 반드시 함수 이름만 적어야 한다!
+- `btn.addEventListner(’click’, event1()); ` 이렇게 괄호를 붙이면 바로 실행된다.
+
+```
+//start class 함수가 바로 실행되었다.
+gameFinishModal.setOnClick(game.start());
+//start 함수의 ref 만 전달해야한다.
+gameFinishModal.setOnClick(game.start);
+```

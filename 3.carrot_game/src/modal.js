@@ -5,6 +5,7 @@ export default class Modal {
     this.modal = document.querySelector(".modal");
     this.modalBtn = document.querySelector(".modal-btn");
     this.modalBtn.addEventListener("click", () => {
+      this.close();
       this.onClick && this.onClick();
     });
   }
