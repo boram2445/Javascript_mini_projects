@@ -1,9 +1,35 @@
 "use strict";
-import Field from "./field.js";
+import { Field, ItemType } from "./field.js";
 import * as sound from "./sound.js";
 
-export default class Game {
-  constructor(timeSec, bugCount, carrotCount) {
+export const Reason = Object.freeze({
+  win: "win",
+  lose: "lose",
+  cancle: "cancle",
+});
+
+export class GameBuilder {
+  withGameDuration(duration) {
+    this.gameDuration = duration;
+    return this; //GameBuilder를 return 한다.
+  }
+
+  withCarrotCount(num) {
+    this.carrotCount = num;
+    return this;
+  }
+
+  widthBugCount(num) {
+    this.bugCount = num;
+    return this;
+  }
+
+  build() {
+    return new Game(this.gameDuration, this.carrotCount, this.bugCount);
+  }
+}
+class Game {
+  constructor(timeSec, carrotCount, bugCount) {
     this.timeSec = timeSec;
     this.bugCount = bugCount;
     this.carrotCount = carrotCount;
@@ -16,7 +42,7 @@ export default class Game {
     this.mainBtn = document.querySelector(".main-btn");
     this.mainBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop("stop");
+        this.stop(Reason.cancle);
       } else {
         this.start();
       }
@@ -56,16 +82,16 @@ export default class Game {
 
   clickItem = (item) => {
     if (!this.started) return; //조건에 맞지 않으면 빠르게 함수를 나가도록 처리하는 것이 좋다.
-    if (item === "carrot") {
+    if (item === ItemType.carrot) {
       this.score++;
       this.gameCount.textContent = this.carrotCount - this.score;
       if (this.score === this.carrotCount) {
         sound.playWin();
-        this.stop("win");
+        this.stop(Reason.win);
       }
-    } else if (item === "bug") {
+    } else if (item === ItemType.bug) {
       sound.playBug();
-      this.stop("loose");
+      this.stop(Reason.lose);
     }
   };
 
@@ -82,7 +108,7 @@ export default class Game {
       this.updateTimerText(--leftTime);
       if (leftTime === 0) {
         sound.playBug();
-        this.stop("loose");
+        this.stop(Reason.lose);
         return;
       }
     }, 1000);

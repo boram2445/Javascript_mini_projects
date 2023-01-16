@@ -1,3 +1,21 @@
+# 🥕 JS 당근 클릭 게임 🐞
+
+[1. 배운점](#1-배운점)
+
+- [1) 랜덤한 숫자 뽑기](#1-랜덤한-숫자-뽑기)
+- [2) matches()](#2-matches)
+- [3) audio 객체](#3-audio-객체를-이용하여-오디오-재생하기)
+- [4) 모듈 사용법](#4-모듈-사용법)
+- [5) 객체 동결하기](#5-객체-동결하기-js에서-타입-보장)
+
+[2. 에러 핸들링](#2-에러-핸들링)
+
+- [1) 한지점을 기준으로 아이템 배치](#1-한지점을-기준으로-아이템-배치하기)
+- [2) setInterval 즉시 실행](#2-setinterval-즉시-실행)
+- [3) 함수 전달하기](#3-함수-전달하기)
+
+---
+
 ## 1. 배운점
 
 ### 1) 랜덤한 숫자 뽑기
@@ -159,6 +177,73 @@ import * as Module from './modules/module.js';
 Module.function1()
 Module.function2()
 etc.
+```
+
+### 5) 객체 동결하기 (JS에서 타입 보장!)
+
+- 전달하는 값을 string으로 처리하게 되면, 가독성도 좋지 않을 뿐더러 실수로 오타를 내 오류가 날 가능성이 높다.
+- 타입스크립트에서는 `type a = 'a' | 'b' | 'c';` 이런식으로 간단하게 타입을 한정지을 수 있지만, 자바스크립트는 가능하지 않다.
+- 따라서 객체의 key를 활용하여 타입을 한정짓는 방법을 사용할 수 있다.
+- `Object.freeze()` 는 객체를 동결하기 위한 메서드로, 동결된 객체에는 속성을 추가하거나 제거하는 것이 불가능한 Immutable한 객체를 만들 수 있다.
+
+```
+export const Reason = Object.freez({
+	win : 'win',
+	lose : 'lose',
+	cancle: 'cancle',
+})
+```
+
+### 6) 빌더 패턴 - 디자인패턴
+
+- 객체를 생성하는 것에 관한 디자인 패턴이다.
+- 객체 생성자가 너무 많거나(3-4개 이상)복잡한 경우, 생성 과정을 분리하여 순차적이고 직관적으로 만든다.
+- 코드의 가독성을 높이고 객체의 Immutability를 유지할 수 있지만🤔 코드가 길어진다는 단점이 있다.
+
+**문제상황 )** 인자가 여러개인데 해당 값이 어떤 값인지 알 수 없다.
+
+```
+//bad
+const game = new Game(5, 10, 10);
+```
+
+**해결 )**
+
+```
+//main.js 파일
+//good
+const game = new GameBuilder()
+  .withGameDuration(5)
+  .withCarrotCount(10)
+  .widthBugCount(10)
+  .build();
+
+//game.js 파일
+export default class GameBuilder {
+  withGameDuration(duration) {
+    this.gameDuration = duration;
+    return this; //GameBuilder를 return 하는 것이다.
+  }
+
+  withCarrotCount(num) {
+    this.carrotCount = num;
+    return this;
+  }
+
+  widthBugCount(num) {
+    this.bugCount = num;
+    return this;
+  }
+
+  build() {   //Game 생성자 생성후 반환
+    return new Game(this.gameDuration, this.carrotCount, this.bugCount);
+  }
+}
+
+//원래 class
+class Game {
+  ...
+}
 ```
 
 ## <br/>

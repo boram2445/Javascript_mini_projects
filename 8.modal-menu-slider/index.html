@@ -9,9 +9,11 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
     <title>My Landing Page</title>
   </head>
   <body>
+    <!-- Nav -->
     <nav>
       <div class="logo">
         <img
@@ -25,13 +27,12 @@
         <li><a href="#">Blog</a></li>
         <li><a href="#">Contact me</a></li>
       </ul>
+      <button id="toggle" class="toggle">
+        <i class="fa fa-bars fa-2x"></i>
+      </button>
     </nav>
 
     <header>
-      <button id="id" class="toggle">
-        <i class="fa fa-bars fa-2x"></i>
-      </button>
-
       <h1>My Landing Page</h1>
 
       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit!</p>
@@ -79,7 +80,6 @@
       </p>
 
       <!-- Modal -->
-
       <div class="modal-container" id="modal">
         <div class="modal">
           <button class="close-btn" id="close">
@@ -116,11 +116,11 @@
                   placeholder="Confirm Password"
                 />
               </div>
+              <button class="cta-btn" id="submit">Submit</button>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>

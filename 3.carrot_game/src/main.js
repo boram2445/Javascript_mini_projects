@@ -1,19 +1,24 @@
 "use strict";
-import Game from "./game.js";
+import { GameBuilder, Reason } from "./game.js";
 import Modal from "./modal.js";
 
-const game = new Game(5, 10, 10);
+const game = new GameBuilder()
+  .withGameDuration(5) //
+  .withCarrotCount(10) //
+  .widthBugCount(10) //
+  .build();
+
 const gameFinishModal = new Modal();
 game.setGameStopLisenter((reason) => {
   let message;
   switch (reason) {
-    case "win":
+    case Reason.win:
       message = "✨You Win✨";
       break;
-    case "loose":
+    case Reason.lose:
       message = "You loose🐞";
       break;
-    case "stop":
+    case Reason.cancle:
       message = "Replay❓";
       break;
     default:

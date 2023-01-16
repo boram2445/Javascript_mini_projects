@@ -15,43 +15,163 @@ body {
   margin: 0;
 }
 
-nav {
-  background-color: var(--primary-color);
-  border-right: 2px solid rgba(200, 200, 200, 0.1);
-  color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100vh;
-  z-index: 100;
-  /* transform: translateX(-100%); */
-}
-
-nav .logo {
-  padding: 30px 0;
-  text-align: center;
-}
-
-nav .logo img {
-  height: 75px;
-  width: 75px;
-  border-radius: 50%;
-}
-
-nav ul {
+ul {
+  list-style: none;
   padding: 0;
-  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(110%);
+}
+
+h3 {
   margin: 0;
 }
 
-nav ul li {
-  border-bottom: 2px solid rgba(200, 200, 200, 0.1);
-  padding: 20px;
+/* 이렇게 해도 보여지지가않는군..? */
+nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  color: #fff;
+  z-index: 100;
+  background-color: var(--primary-color);
+  transform: translateX(-100%);
+  transition: all 300ms ease-in;
 }
 
-/* 해당 요소의 첫번째 */
+nav.on {
+  transform: translateX(0);
+}
+
+nav ul li {
+  border-bottom: rgb(92, 90, 90) solid 1px;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+/* 형제 요소들 중에서 선택 */
 nav ul li:first-of-type {
-  border-top: 2px solid rgba(200, 200, 200, 0.1);
-  padding: 20px;
+  border-top: rgb(92, 90, 90) solid 1px;
+}
+
+nav .logo {
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav .logo img {
+  border-radius: 50%;
+}
+
+.toggle {
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 0.6rem;
+  padding: 5px 8px;
+  border-radius: 4px;
+  position: absolute;
+  top: 10px;
+  right: -50px;
+}
+
+header {
+  padding: 40px 0;
+  background-color: var(--primary-color);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-btn {
+  margin-top: 20px;
+  background-color: var(--secondary-color);
+  color: #fff;
+  padding: 8px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 5px;
+}
+
+.cta-btn:hover {
+  filter: brightness(110%);
+}
+
+.container {
+  padding: 30px 40px;
+}
+
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.modal-container.on {
+  display: block;
+}
+
+.modal {
+  width: 350px;
+  height: 450px;
+  background-color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-header {
+  padding: 10px 15px;
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 20px;
+}
+
+.modal-content {
+  padding: 15px 10px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.modal-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-form div input {
+  border-color: rgb(218, 218, 218);
+  padding: 4px 5px;
+  border-radius: 5px;
 }

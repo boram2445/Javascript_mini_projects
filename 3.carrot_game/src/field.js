@@ -3,8 +3,13 @@ import * as sound from "./sound.js";
 
 const CARROT_SIZE = 80;
 
+export const ItemType = Object.freeze({
+  carrot: "carrot",
+  bug: "bug",
+});
+
 // 아이템 배치, 아이템 클릭
-export default class Field {
+export class Field {
   constructor(carrotCount, bugCount) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount;
@@ -20,8 +25,8 @@ export default class Field {
 
   init() {
     this.field.innerHTML = "";
-    this._addItems("bug", "./images/bug.png", this.bugCount);
-    this._addItems("carrot", "./images/carrot.png", this.carrotCount);
+    this._addItems(ItemType.bug, "./images/bug.png", this.bugCount);
+    this._addItems(ItemType.carrot, "./images/carrot.png", this.carrotCount);
   }
 
   _addItems(className, src, count) {
@@ -42,9 +47,9 @@ export default class Field {
     if (e.target.matches(".carrot")) {
       e.target.remove();
       sound.playCarrot();
-      this.onClickItem && this.onClickItem("carrot");
+      this.onClickItem && this.onClickItem(ItemType.carrot);
     } else if (e.target.matches(".bug")) {
-      this.onClickItem && this.onClickItem("bug");
+      this.onClickItem && this.onClickItem(ItemType.bug);
     }
   };
 }
