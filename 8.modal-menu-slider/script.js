@@ -1,23 +1,26 @@
 "use strict";
 
 const navBtn = document.querySelector("#toggle");
-const nav = document.querySelector("nav");
+const signUpBtn = document.querySelector("#open");
+const closeBtn = document.querySelector("#close");
+const modal = document.querySelector("#modal");
+
 navBtn.addEventListener("click", () => {
-  nav.classList.toggle("on");
+  document.body.classList.toggle("show-nav");
 });
 
-const signUpBtn = document.querySelector("#open");
-const modal = document.querySelector("#modal");
-const modalBg = document.querySelector(".modal-container");
-const closeBtn = document.querySelector("#close");
 signUpBtn.addEventListener("click", () => {
-  modal.classList.toggle("on");
+  modal.classList.toggle("show-modal");
 });
-modalBg.addEventListener("click", (e) => {
-  if (e.target.classList.contains("modal-container")) {
-    modal.classList.remove("on");
-  }
-});
+
 closeBtn.addEventListener("click", () => {
-  modal.classList.remove("on");
+  modal.classList.remove("show-modal");
 });
+
+// modal.addEventListener("click", (e) => {
+//   if (e.target !== e.currentTarget) return;
+//   modal.classList.remove("show-modal");
+// });
+window.addEventListener("click", (e) =>
+  e.target === modal ? modal.classList.remove("show-modal") : false
+);

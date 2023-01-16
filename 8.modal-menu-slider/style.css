@@ -13,6 +13,11 @@
 body {
   font-family: "Lato", sans-serif;
   margin: 0;
+  transition: all 300ms ease-in;
+}
+
+body.show-nav {
+  transform: translateX(200px);
 }
 
 ul {
@@ -39,7 +44,6 @@ h3 {
   margin: 0;
 }
 
-/* 이렇게 해도 보여지지가않는군..? */
 nav {
   position: absolute;
   top: 0;
@@ -49,11 +53,6 @@ nav {
   z-index: 100;
   background-color: var(--primary-color);
   transform: translateX(-100%);
-  transition: all 300ms ease-in;
-}
-
-nav.on {
-  transform: translateX(0);
 }
 
 nav ul li {
@@ -65,6 +64,10 @@ nav ul li {
 /* 형제 요소들 중에서 선택 */
 nav ul li:first-of-type {
   border-top: rgb(92, 90, 90) solid 1px;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
 }
 
 nav .logo {
@@ -114,12 +117,15 @@ header {
 }
 
 .container {
+  margin: 0 auto;
   padding: 30px 40px;
+  max-width: 100%;
+  width: 800px;
 }
 
 .modal-container {
   background-color: rgba(0, 0, 0, 0.3);
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
@@ -128,18 +134,22 @@ header {
   display: none;
 }
 
-.modal-container.on {
+.modal-container.show-modal {
   display: block;
 }
 
 .modal {
+  max-width: 100%;
   width: 350px;
   height: 450px;
   background-color: #fff;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transform: translate(-50%, -50%);
+  animation-name: modalopen;
+  animation-duration: var(--modal-duration);
 }
 
 .modal-header {
@@ -174,4 +184,13 @@ header {
   border-color: rgb(218, 218, 218);
   padding: 4px 5px;
   border-radius: 5px;
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
