@@ -1,6 +1,11 @@
-##
+## 메뉴 슬라이더, 모달 🌱 
 
-### 배운점
+### 결과물 😉
+<img src="https://user-images.githubusercontent.com/68495264/212687656-fb52deaf-ed75-4204-ab75-c747637dc249.gif" width="600px"/>
+
+---
+
+### 배운점 📚
 
 #### 1. HTML
 
@@ -37,9 +42,22 @@
   }
   ```
 - animation 주기
+  - keyframes를 통해 animation을 생성한다. (from-시작, to-끝)
+  - animation을 주고 싶은 요소에 해당 animation의 이름을 작성해 준다.
 
   ```css
-
+  .modal {
+    animation-name: modalopen;
+    animation-duration: var(--modal-duration);
+  }
+  @keyframes modalopen {
+  from {
+    opacity: 0;
+   }
+  to {
+    opacity: 1;
+   }
+  }
   ```
 
 #### 3. JS
