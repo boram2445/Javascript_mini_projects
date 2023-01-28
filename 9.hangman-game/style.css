@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #34495e;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.game-continaer {
+  margin: 50px auto;
+  display: flex;
+  gap: 100px;
+}
+
+.figure-container {
+  fill: transparent;
+  stroke: #fff;
+  stroke-width: 4px;
+  stroke-linecap: round;
+}
+
+.figure-part {
+  display: none;
+}
+
+.wrong-letters-container {
+  text-align: right;
+  font-size: 20px;
+  width: 100px;
+  word-break: break-all;
+}
+
+.word {
+  display: flex;
+  gap: 3px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.letter {
+  width: 25px;
+  text-align: center;
+  border-bottom: 3px solid rgb(96, 122, 172);
+}
+
+.popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.popup {
+  padding: 25px 15px;
+  background-color: rgb(58, 118, 248);
+  border-radius: 5px;
+  text-align: center;
+  border: 2px solid rgb(35, 97, 126);
+  box-shadow: 0 15px 10px 3px rgba(0, 0, 0, 0.1);
+}
+
+.popup .final-message {
+  font-size: 14px;
+}
+
+.popup button {
+  padding: 10px 20px;
+  background-color: #fff;
+  font-size: 13px;
+  border: 1px solid rgb(65, 187, 243);
+  font-weight: 600;
+  color: rgb(14, 161, 230);
+  cursor: pointer;
+}
+
+.popup button:active {
+  transform: scale(0.98);
+}
+
+.notification-container {
+  position: absolute;
+  bottom: 0;
+  padding: 5px 30px;
+  background-color: rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  border-radius: 10px;
+  transform: translateY(100%);
+  transition: all 0.3s ease-in-out;
+}
+
+.notification-container.show {
+  transform: translateY(0);
+}
