@@ -41,6 +41,7 @@ body {
 .word {
   display: flex;
   gap: 3px;
+  height: 34px;
   font-size: 25px;
   font-weight: 600;
 }
@@ -59,9 +60,9 @@ body {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
-  display: none;
 }
 
 .popup {
