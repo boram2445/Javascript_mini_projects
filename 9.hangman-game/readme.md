@@ -72,3 +72,51 @@
     transform: scale(0.98);
   }
   ```
+
+### 3.Javascript
+
+- **innerHtml에서 고차함수 사용하기**
+  -innerHTML을 사용할때도 `${ }`안에서 고차함수를 사용할 수 있구나!
+
+  - 하지만, 배열이면 string으로 변환해주어야 한다.
+  - 나는 일단 length대로 빈 배열을 배치해 주고, 나중에 textContet로 입력한 단어를 추가해주려고 했다.
+  - 선생님은 단어를 입력할때마다 새롭게 innerHTML을 사용해서 배치를 해주고 있었다.
+
+  ```js
+  //내가 작성한 코드
+  function displayWordBox() {
+    wordBoxs.innerHTML = "";
+    for (let i = 0; i < selectedWord.length; i++) {
+      wordBoxs.innerHTML += '<div class="letter"></div>';
+    }
+  }
+  ```
+
+  ```js
+  //쌤이 작성한 코드
+  function displayWord() {
+    wordEl.innerHTML = `
+        ${selectedWrod
+          .split("")
+          .map(
+            (letter) =>
+              `<div class="letter">${
+                correctLetters.includes(letter) ? letter : ""
+              }</div>`
+          )
+          .join("")}
+      `;
+  }
+  ```
+
+- **알파벳만 입력가능하게 - e.keyCode 이용**
+
+  ```js
+  if (e.keyCode >= 65 && e.keyCode <= 90) {
+    //...
+  }
+  ```
+
+### 느낀점
+
+- 이미 구현을 다 해놓은 상태에서 선생님 코드로 변경하려니까 어렵다..
