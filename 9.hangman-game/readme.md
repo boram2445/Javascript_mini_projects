@@ -1,29 +1,35 @@
-새로운 개념인 svg는 강의를 들으며 구현하였고, 나머지 css와 js는 스스로 구현후 강의를 들으며 리팩토링 하였습니다.
+## 행맨 게임 😱
+랜덤으로 주어진 단어를 맞추는 게임!
 
-## 배운점
+`새로운 개념인 svg는 강의를 들으며 구현하였고, 나머지 css와 js는 스스로 구현후, 강의를 들으며 리팩토링 하였습니다.`
 
-### 1.HTML
+### 결과물 🌱
+![2023-01-29 19;27;35](https://user-images.githubusercontent.com/68495264/215320287-b626c641-37c8-44e9-bbfd-7cfb7924484e.gif)
 
-```html
-<svg height="250" width="200" class="figure-container">
-  <!-- Rod -->
-  <line x1="60" y1="20" x2="140" y2="20" />
-  <line x1="140" y1="20" x2="140" y2="50" />
-  <line x1="60" y1="20" x2="60" y2="230" />
-  <line x1="20" y1="230" x2="100" y2="230" />
+---
+### 배운점 📚
+#### 1.HTML
 
-  <!-- Head -->
-  <circle cx="140" cy="70" r="20" class="figure-part" />
-  <!-- body -->
-  <line x1="140" x2="140" y1="90" y2="160" class="figure-part" />
-  <!-- arms -->
-  <line x1="140" x2="120" y1="130" y2="100" class="figure-part" />
-  <line x1="140" x2="160" y1="130" y2="100" class="figure-part" />
-  <!-- legs -->
-  <line x1="140" x2="120" y1="160" y2="200" class="figure-part" />
-  <line x1="140" x2="160" y1="160" y2="200" class="figure-part" />
-</svg>
-```
+  ```html
+  <svg height="250" width="200" class="figure-container">
+    <!-- Rod -->
+    <line x1="60" y1="20" x2="140" y2="20" />
+    <line x1="140" y1="20" x2="140" y2="50" />
+    <line x1="60" y1="20" x2="60" y2="230" />
+    <line x1="20" y1="230" x2="100" y2="230" />
+
+    <!-- Head -->
+    <circle cx="140" cy="70" r="20" class="figure-part" />
+    <!-- body -->
+    <line x1="140" x2="140" y1="90" y2="160" class="figure-part" />
+    <!-- arms -->
+    <line x1="140" x2="120" y1="130" y2="100" class="figure-part" />
+    <line x1="140" x2="160" y1="130" y2="100" class="figure-part" />
+    <!-- legs -->
+    <line x1="140" x2="120" y1="160" y2="200" class="figure-part" />
+    <line x1="140" x2="160" y1="160" y2="200" class="figure-part" />
+  </svg>
+  ```
 
 - **svg 태그**
   - scalable vector graphics의 약자로 벡터 기반 그래픽을 xml형식으로 정의하는 것을 의미한다.
@@ -55,7 +61,7 @@
 
 ---
 
-### 2.CSS
+#### 2.CSS
 
 - **모양 요소 꾸미기 속성**
 
@@ -72,8 +78,8 @@
     transform: scale(0.98);
   }
   ```
-
-### 3.Javascript
+---
+#### 3.Javascript
 
 - **innerHtml에서 고차함수 사용하기**
   -innerHTML을 사용할때도 `${ }`안에서 고차함수를 사용할 수 있구나!
@@ -134,6 +140,6 @@
 - **게임 실행여부 확인 변수**
   - 함수내에서 if else로 판단하지말고, 전역 변수 예를들어 `let playable = true` 등과 같은 것을 만들어주어 판단하자.
 
-### 느낀점
+#### 느낀점
 
 - 이미 구현을 다 해놓은 상태에서 선생님 코드로 변경하려니까 어렵다
