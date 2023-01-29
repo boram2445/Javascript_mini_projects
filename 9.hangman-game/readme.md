@@ -109,6 +109,20 @@
   }
   ```
 
+- **자식 요소들의 텍스트 모두 가져와서 string으로 합치기**
+
+  - 자신의 텍스트가 아니라, 자식 요소의 텍스트를 textContent로 가져오면, 텍스트 위아래 `\n`가 포함되어 이렇게 나타난다.
+  - 이를 해결하기 위해 쌤은 replace로 `\n`을 `''`로 바꾸어 주었다.
+
+  ```
+    re
+
+  ```
+
+  ```js
+  const innerWord = wordBoxs.textContent.replace(/[\n]/g, "");
+  ```
+
 - **알파벳만 입력가능하게 - e.keyCode 이용**
 
   ```js

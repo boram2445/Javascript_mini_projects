@@ -31,15 +31,24 @@ function init() {
 //단어 박스 보여주기
 function displayWordBox() {
   wordBoxs.innerHTML = "";
-  for (let i = 0; i < selectedWord.length; i++) {
-    wordBoxs.innerHTML += '<div class="letter"></div>';
-  }
+  wordBoxs.innerHTML = `
+    ${selectedWord
+      .split("")
+      .map(
+        (letter) =>
+          `<div class="letter">${
+            rightLetters.includes(letter) ? letter : ""
+          }</div>`
+      )
+      .join("")}
+  `;
 }
 
 //팝업 열기
 function openPopup() {
+  const innerWord = wordBoxs.textContent.replace(/[\n]/g, "").trim();
   let lost = wrongLetters.length === 6;
-  let win = rightLetters.length === selectedWord.length;
+  let win = innerWord === selectedWord;
   if (!(lost || win)) return;
   else {
     if (lost) {
@@ -61,9 +70,9 @@ function showNotification() {
 }
 
 //right letter일 경우
-function updateRightLetter(index, key) {
-  wordBoxs.children[index].textContent = key;
-  rightLetters.push(key);
+function updateRightLetter(letter) {
+  rightLetters.push(letter);
+  displayWordBox();
 }
 
 //wrong letter일 경우
@@ -85,8 +94,11 @@ function checkWordEvent(e) {
     showNotification();
     return;
   }
-  let index = selectedWord.indexOf(letter);
-  index !== -1 ? updateRightLetter(index, letter) : updateWrongLetter(letter);
+  if (selectedWord.includes(letter)) {
+    updateRightLetter(letter);
+  } else {
+    updateWrongLetter(letter);
+  }
   openPopup();
 }
 
