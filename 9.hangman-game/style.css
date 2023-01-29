@@ -59,14 +59,18 @@ body {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
   display: none;
+}
+
+.popup-container.show {
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .popup {
   padding: 25px 15px;
+  min-width: 300px;
   background-color: rgb(58, 118, 248);
   border-radius: 5px;
   text-align: center;

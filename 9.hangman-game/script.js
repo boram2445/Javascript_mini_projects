@@ -18,7 +18,8 @@ let playable = true;
 
 //게임 초기화
 function init() {
-  popupContainer.style.display = "none";
+  playable = true;
+  popupContainer.classList.remove("show");
   wrongBox.innerHTML = "";
   selectedWord = words[Math.floor(Math.random() * words.length)];
   figure.forEach((item) => (item.style.display = "none"));
@@ -39,15 +40,15 @@ function displayWordBox() {
 function openPopup() {
   let lost = wrongLetters.length === 6;
   let win = rightLetters.length === selectedWord.length;
-  if (!(lost && win)) return false;
+  if (!(lost || win)) return;
   else {
     if (lost) {
       popupMessage.textContent = "Try Again😱";
     } else {
       popupMessage.textContent = "Congratulations! You won!😉";
     }
-    popupContainer.style.display = "block";
-    return true;
+    popupContainer.classList.add("show");
+    playable = false;
   }
 }
 
@@ -76,22 +77,17 @@ function updateWrongLetter(letter) {
   wrongLetters.push(letter);
 }
 
-//단어 입력 이벤트 핸들러
 function checkWordEvent(e) {
-  //알파벳만 입력 가능
+  if (!playable) return;
   if (!(e.keyCode >= 65 && e.keyCode <= 90)) return;
   const letter = e.key.toLowerCase();
-
-  //이미 입력했던 단어인지 확인
   if (wrongLetters.includes(letter) || rightLetters.includes(letter)) {
     showNotification();
-  } else {
-    //단어가 알맞은지 확인
-    let index = selectedWord.indexOf(letter);
-    index !== -1 ? updateRightLetter(index, letter) : updateWrongLetter(letter);
-    //팝업이 열리면 게임 중지
-    if (openPopup()) return;
+    return;
   }
+  let index = selectedWord.indexOf(letter);
+  index !== -1 ? updateRightLetter(index, letter) : updateWrongLetter(letter);
+  openPopup();
 }
 
 init();
