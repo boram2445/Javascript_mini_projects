@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: rgba(26, 13, 4, 0.836);
+  color: #fff;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+button {
+  outline: 0;
+  cursor: pointer;
+  padding: 5px 8px;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+.container {
+  margin: auto;
+  max-width: 800px;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.form-container {
+  gap: 10px;
+}
+
+.form-container,
+.submit {
+  display: flex;
+}
+
+.search {
+  outline: 0;
+  padding: 5px 10px;
+  width: 220px;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid rgb(7, 97, 233);
+}
+
+.search-btn {
+  border-radius: 0 5px 5px 0;
+  border: 1px solid rgb(7, 97, 233);
+}
+
+.meals {
+  /* 이렇게 이미지 배치 어떻게 했지 */
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.meals img {
+  width: 120px;
+  border: 5px solid #fff;
+}
+
+.meals img:hover {
+  filter: brightness(1.1);
+  cursor: pointer;
+}
