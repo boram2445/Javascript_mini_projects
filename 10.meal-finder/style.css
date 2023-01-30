@@ -6,21 +6,29 @@ body {
   margin: 0;
   background-color: rgba(26, 13, 4, 0.836);
   color: #fff;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 button {
   outline: 0;
   cursor: pointer;
   padding: 5px 8px;
+  font-size: 16px;
 }
 
 button:hover {
   filter: brightness(1.1);
 }
 
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
 .container {
   margin: auto;
+  padding-bottom: 100px;
   max-width: 800px;
   display: flex;
   display: flex;
@@ -40,10 +48,11 @@ button:hover {
 
 .search {
   outline: 0;
-  padding: 5px 10px;
-  width: 220px;
+  padding: 8px 12px;
+  width: 250px;
   border-radius: 5px 0 0 5px;
   border: 1px solid rgb(7, 97, 233);
+  font-size: 16px;
 }
 
 .search-btn {
@@ -66,4 +75,43 @@ button:hover {
 .meals img:hover {
   filter: brightness(1.1);
   cursor: pointer;
+}
+
+.single-meal {
+  max-width: 450px;
+}
+
+.single-meal img {
+  width: 250px;
+  border: 5px solid #fff;
+}
+
+.single-meal .category {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+  padding: 15px;
+  border: dotted 2px goldenrod;
+  font-weight: 600;
+}
+
+.single-meal .instruction {
+  font-weight: 400;
+}
+
+.single-meal .ingredients ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.single-meal .ingredients ul li {
+  background-color: #fff;
+  color: black;
+  padding: 4px 2px;
+  border-radius: 4px;
 }
