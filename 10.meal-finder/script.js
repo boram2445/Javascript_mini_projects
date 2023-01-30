@@ -29,7 +29,26 @@ async function fetchSearchMeal(e) {
   `;
 }
 
-function fetchRandomMeal() {}
+async function fetchMealDetail(e) {
+  if (e.target.tagName !== "IMG") return;
+  const id = e.target.dataset.id;
+
+  const [mealDetail] = await fetch(
+    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
+  )
+    .then((response) => response.json())
+    .then((data) => data.meals);
+  showMealPage(mealDetail);
+}
+
+async function fetchRandomMeal() {
+  const [mealDetail] = await fetch(
+    "https://www.themealdb.com/api/json/v1/1/random.php"
+  )
+    .then((response) => response.json())
+    .then((data) => data.meals);
+  showMealPage(mealDetail);
+}
 
 function getIngredients(detail) {
   const ingredients = Object.entries(detail).filter(
@@ -38,7 +57,6 @@ function getIngredients(detail) {
   const measures = Object.entries(detail).filter(
     (obj) => obj[0].includes("strMeasure") && obj[1].trim()
   );
-  console.log(ingredients);
   let ingredientList = [];
   for (let i = 0; i < ingredients.length; i++) {
     ingredientList.push({
@@ -49,16 +67,7 @@ function getIngredients(detail) {
   return ingredientList;
 }
 
-async function showMealPage(e) {
-  if (e.target.tagName !== "IMG") return;
-  const id = e.target.dataset.id;
-
-  const [mealDetail] = await fetch(
-    `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-  )
-    .then((response) => response.json())
-    .then((data) => data.meals);
-
+async function showMealPage(mealDetail) {
   const ingredientList = getIngredients(mealDetail);
 
   singleMeal.innerHTML = `
@@ -81,4 +90,5 @@ async function showMealPage(e) {
 }
 
 form.addEventListener("submit", fetchSearchMeal);
-mealsContainer.addEventListener("click", showMealPage);
+mealsContainer.addEventListener("click", fetchMealDetail);
+randomBtm.addEventListener("click", fetchRandomMeal);
