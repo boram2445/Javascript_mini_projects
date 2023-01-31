@@ -61,20 +61,42 @@ ul {
 }
 
 .meals {
-  /* 이렇게 이미지 배치 어떻게 했지 */
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-.meals img {
-  width: 120px;
-  border: 5px solid #fff;
-}
-
-.meals img:hover {
-  filter: brightness(1.1);
+.meal {
   cursor: pointer;
+  position: relative;
+  height: 180px;
+  width: 180px;
+}
+
+.meal img {
+  width: 100%;
+  height: 100%;
+  border: 4px #fff solid;
+}
+
+.meal-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ease-in 200ms;
+}
+
+.meal-info:hover {
+  opacity: 1;
 }
 
 .single-meal {
@@ -114,4 +136,30 @@ ul {
   color: black;
   padding: 4px 2px;
   border-radius: 4px;
+}
+
+@media (max-width: 800px) {
+  .meals {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .meals {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .meal {
+    height: 200px;
+    width: 200px;
+  }
+}
+
+@media (max-width: 500px) {
+  .meals {
+    grid-template-columns: 1fr;
+  }
+  .meal {
+    height: 300px;
+    width: 300px;
+  }
 }
