@@ -34,3 +34,20 @@
     opacity: 1;
   }
   ```
+
+#### 2. JS
+
+- **localStroage에 저장된 데이터 사용하기**
+
+  -그냥 바로 `const transaction =JSON.parse(localStorage.getItem('....')) | []` 이런식으로 했더니, localStorage내용을 받아오지 못했다
+
+  ```js
+  const localStroageTransactions = JSON.parse(
+    localStorage.getItem("transactions")
+  );
+
+  let transactions =
+    localStorage.getItem("transactions") !== null
+      ? localStroageTransactions
+      : [];
+  ```
