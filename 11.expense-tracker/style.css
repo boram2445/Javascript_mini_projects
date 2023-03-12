@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+
+:root {
+  --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --color-red: rgba(148, 2, 2, 0.692);
+  --color-green: green;
+  --color-light-grey: rgb(204, 204, 204);
+  --color-purple: rgb(74, 46, 201);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  background-color: azure;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  background-color: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  text-align: center;
+  margin: 2rem;
+}
+
+.inc-exp-container {
+  margin: 1rem 0 2rem 0;
+  padding: 1.2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  border-radius: 1rem;
+}
+
+.inc-exp-container > div {
+  flex: 1;
+  text-align: center;
+}
+
+.inc-exp-container > div:first-of-type {
+  border-right: 1px solid var(--color-light-grey);
+}
+
+.money {
+  margin-top: 0.3rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.money.plus {
+  color: var(--color-green);
+}
+
+.money.minus {
+  color: var(--color-red);
+}
+
+h3 {
+  margin: 2rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-light-grey);
+}
+
+.list li {
+  margin-top: 0.3rem;
+  padding: 1rem;
+  background-color: white;
+  border-right: 5px solid;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.list li.plus {
+  border-color: var(--color-green);
+}
+
+.list li.minus {
+  border-color: var(--color-red);
+}
+
+.delete-btn {
+  position: absolute;
+  left: 0;
+  transform: translate(-100%, 0);
+  background-color: #e74c3c;
+  color: white;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.list li:hover .delete-btn {
+  opacity: 1;
+}
+
+.form-control label {
+  font-size: 14px;
+  display: block;
+  font-weight: 600;
+}
+
+.form-control input {
+  margin: 0.8rem auto;
+  width: 100%;
+  padding: 0.6rem 0.4rem;
+  border: 1px solid var(--color-light-grey);
+  border-radius: 0.2rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 0.7rem 0;
+  background-color: var(--color-purple);
+  color: white;
+  border-radius: 0.2rem;
+}
+
+.btn:hover {
+  filter: brightness(1.1);
+}
