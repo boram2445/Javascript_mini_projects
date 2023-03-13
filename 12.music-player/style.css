@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  height: 100vh;
+  background: rgb(246, 252, 200);
+  background: linear-gradient(
+    0deg,
+    rgba(246, 252, 200, 0) 0%,
+    rgba(240, 181, 228, 0.6222864145658263) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1,
+h4 {
+  margin: 0;
+}
+
+button {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: rgb(202, 200, 200);
+  cursor: pointer;
+  transition: all ease 100ms;
+}
+
+button:hover {
+  color: rgb(153, 151, 151);
+}
+
+.music-container {
+  margin: 5rem 0;
+  position: relative;
+  padding: 25px 30px;
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 20px 20px 0 rgba(252, 169, 169, 0.6);
+  z-index: 100;
+}
+
+/* 이미지 컨테이너로 공간 사이즈를 확보하고, 그것을 기준으로 img를 position absolute를 하여 이미지가 컨테이너 밖으로 튀어나오게 하였다 */
+.img-container {
+  position: relative;
+  width: 100px;
+}
+
+.img-container::after {
+  content: "";
+  background-color: white;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-18px, -4px);
+}
+
+.img-container img {
+  border-radius: 50%;
+  object-fit: cover;
+  height: 80px;
+  width: 80px;
+  position: absolute;
+  bottom: -15px;
+
+  animation: rotate 3s linear infinite;
+
+  /* 애니메이션을 멈출지 진행할지 설정 - 음악이 재생될때만 시작해야 한다 */
+  animation-play-state: paused;
+}
+
+.music-container.play .img-container img {
+  animation-play-state: running;
+}
+
+.navigation {
+  display: flex;
+  gap: 1rem;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+}
+
+.action-btn-big i {
+  font-size: 18px;
+}
+
+.music-info {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: calc(100% - 40px);
+  padding: 0.5rem 0.3rem 0.5rem 35%;
+  background-color: white;
+  border-radius: 10px 10px 0 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  gap: 0.5rem;
+  transform: translateY(0%);
+  z-index: 0;
+  opacity: 0;
+  transition: all ease-in 300ms;
+}
+
+.music-container.play .music-info {
+  transform: translateY(-100%);
+  opacity: 1;
+}
+
+.progress-container {
+  width: 90%;
+  height: 4px;
+  background-color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.progress {
+  width: 0%;
+  height: 4px;
+  background-color: rgb(247, 168, 194);
+  border-radius: 10px;
+  transition: width 0.1s linear;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
